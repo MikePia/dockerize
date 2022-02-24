@@ -37,6 +37,8 @@ docker volume inspect dockerize2_postgres_data
 <!-- Note that the volume name seems to begin with the name of the containing directory (dockerize2 here) -->
 ```
 
+## Beginning of _03_dev STUFF
+
 ### [Dockerfile](app/Dockerfile)
 ### [docker-compose.yml](docker-compose.yml)
 https://docs.docker.com/compose/compose-file/
@@ -58,7 +60,7 @@ ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
 docker ps
 docker exec -it <name> /bin/bash
 ```
-
+## _04_dev
 Run a different image that uses postgres
 ```
 docker build -f ./app/Dockerfile -t hello_django:latest ./app
