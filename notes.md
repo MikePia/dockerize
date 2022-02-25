@@ -58,7 +58,7 @@ ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
 
 ```
 docker ps
-docker exec -it <name> /bin/bash
+docker exec -it <name> /bin/sh
 ```
 ## _04_dev
 Run a different image that uses postgres
@@ -74,7 +74,7 @@ docker-compose exec web python manage.py migrate
 ```
 ### Production 
 #### Gunicorn
-* to requirements.txt
+* gunicorn==20.1.0 to requirements.txt
 * [docker-compose.prod.yml](./docker-compose.prod.yml)
 This differs from the final version. Observations
 * command is gunicorn not runserver
