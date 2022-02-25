@@ -98,4 +98,13 @@ $ docker-compose -f docker-compose.prod.yml exec web python manage.py migrate --
 ```
 * migrate is out of the build and has to be run manually
 
-end _04_prod
+end _05_prod
+
+## nginx
+* add nginx/Dockerfile and nginx/nginx.conf
+* Dockerfile replaces the default nginx.conf with this one
+* nginx.conf instructs nginx to listen on :80 for hello_django
+* replace the port : directive with expose: in docker-compose.prod and add nginx service that depends on web
+    * port 1337:80 (?)
+* rebuild ...
+end _06_prod
