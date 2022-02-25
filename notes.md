@@ -67,7 +67,7 @@ docker build -f ./app/Dockerfile -t hello_django:latest ./app
 docker run -d -p 8006:8000 -e "SECRET_KEY=please_change_me" -e "DEBUG=1" -e "DJANGO_ALLOWED_HOSTS=*" hello_django python /usr/src/app/manage.py runserver 0.0.0.0:8000
 ```
 
-* The migrate and fluch commands can be commented in entrypoint.sh to avoid running them every time and fun manually
+* The migrate and flush commands can be commented in entrypoint.sh to avoid running them every time and fun manually
 ```
 docker-compose exec web python manage.py flush --no-input
 docker-compose exec web python manage.py migrate
@@ -83,3 +83,19 @@ docker-compose exec web python manage.py migrate
 
 ```docker-compose -f docker-compose.prod.yml up -d --build```
 ```docker-compose -f docker-compose.prod.yml down -v```
+
+end _04_prod
+
+* Create entrypoint.prod.sh remove migrate and flush
+* Create Dockerfile.prod to run it
+* Alter docker-compose.prod.yml 
+    * to run the Dockerfile.prod
+    * remove the volumes: for /usr/src/app  --- The multi stage build in Dockerfile.prod uses the directory for build. Bui packages are created as wheels there and the finished packages are used the in final build. That is the point of the multistage build -- to make the final smaller
+```
+docker-compose -f docker-compose.prod.yml down -v
+$ docker-compose -f docker-compose.prod.yml up -d --build
+$ docker-compose -f docker-compose.prod.yml exec web python manage.py migrate --noinput
+```
+* migrate is out of the build and has to be run manually
+
+end _04_prod
