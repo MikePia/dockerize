@@ -150,7 +150,7 @@ docker-compose -f docker-compose.prod.yml exec web python manage.py collectstati
 
 _end _08_prod
 
-## Media files
+## Media files Development Server
 Bring down prod
 build dev
 startapp upload on dev container
@@ -180,7 +180,29 @@ MEDIA_ROOT = BASE_DIR / "mediafiles"
 * upload/templates/upload.html
 
 ### Test and upload an image
+* If the Dev server is up
 ```docker-compose up -d --build```
 
 end _09_dev
+
+##  Medial files Production specific
+* add media_volume to  both web.volumes and nginix.volumes in docker-compose.prod.yml
+    * ```- media_volume:/home/app/web/mediafiles```
+    * also media_volume to the top level volumes
+* Dockerfile.prod add mediafiles to the "create the appropriate directories section"
+    * ```RUN mkdir $APP_HOME/mediafiles```
+* nginx.conf ```location /media/``` to server object
+* ```alias /home/app/web/mediafiles/;```
+
+#### Test
+* if development server is running
+```docker-compose  -v```
+* Required commands build, migrate, collectstatic
+```
+docker-compose -f docker-compose.prod.yml up -d --build
+docker-compose -f docker-compose.prod.yml exec web python manage.py migrate --noinput
+docker-compose -f docker-compose.prod.yml exec web python manage.py collectstatic --noinput --clear
+```
+end _10_prod
+
 
