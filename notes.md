@@ -107,4 +107,19 @@ end _05_prod
 * replace the port : directive with expose: in docker-compose.prod and add nginx service that depends on web
     * port 1337:80 (?)
 * rebuild ...
+https://docs.nginx.com/nginx/admin-guide/web-server/app-gateway-uwsgi-django/
+https://stackoverflow.com/questions/40801772/what-is-the-difference-between-docker-compose-ports-vs-expose
 end _06_prod
+
+### After the last one, the app is running on 1337 and we have lost static files. The /admin page is not styled
+Edit settings.py 
+```
+STATIC_URL = "/static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
+```
+Run the dev server and check that /admin works 
+```
+docker-compose -f docker-compose.prod.yml down -v
+docker-compose up -d --build
+```
+end _07_dev
