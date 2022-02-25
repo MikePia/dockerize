@@ -75,10 +75,11 @@ docker-compose exec web python manage.py migrate
 ### Production 
 #### Gunicorn
 * gunicorn==20.1.0 to requirements.txt
-* [docker-compose.prod.yml](./docker-compose.prod.yml)
-This differs from the final version. Observations
-* command is gunicorn not runserver
-* ports 8000:8000 differs from final
-* .env.prod instead of variables (why are they in the dev version?)
-* .env.prod.db   (seperate file???)
+* Create files 
+    * docker-compose.prod.yml
+    * .env.prod
+    * .env.prod.db
+* 3 changes to docker-compose, Refer to the two new .env files (no environemnt variables) and change the web service command to run gunicorn instead of runserver
+
 ```docker-compose -f docker-compose.prod.yml up -d --build```
+```docker-compose -f docker-compose.prod.yml down -v```
