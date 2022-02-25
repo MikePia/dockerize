@@ -150,3 +150,37 @@ docker-compose -f docker-compose.prod.yml exec web python manage.py collectstati
 
 _end _08_prod
 
+## Media files
+Bring down prod
+build dev
+startapp upload on dev container
+
+## Create new  app
+* If prod is still running
+```docker-compose -f docker-compose.prod.yml down -v```
+
+```
+docker-compose up -d --build
+docker-compose exec web python manage.py startapp upload
+```
+#### Edit settings
+
+* add upload to INSTALLED_APPS
+```
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "mediafiles"
+```
+ #### Other files for upload app
+* add to hello_django/urls.py
+    *  ```path('', image_upload, name="upload"),```
+* .gitignore 
+    * add media to .gitignore (or create .gitignore -note the the .env files are in git already)
+* upload/views.py
+    * add upload_image to views.py
+* upload/templates/upload.html
+
+### Test and upload an image
+```docker-compose up -d --build```
+
+end _09_dev
+
