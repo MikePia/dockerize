@@ -123,3 +123,30 @@ docker-compose -f docker-compose.prod.yml down -v
 docker-compose up -d --build
 ```
 end _07_dev
+
+### collectstatic (must be run)
+* In docker-compose.prod.yml add static_volume to targets
+    * web
+    * nginx
+    * top level volumes
+* In Dockerfile.prod add to 'create the appropriate directories' section
+    * ```RUN mkdir $APP_HOME/staticfiles```
+* In nginx.conf add location /static/ to server object
+
+* If the developments server is still running
+```docker-compose down -v```
+```
+docker-compose -f docker-compose.prod.yml up -d --build
+docker-compose -f docker-compose.prod.yml exec web python manage.py migrate --noinput
+docker-compose -f docker-compose.prod.yml exec web python manage.py collectstatic --no-input --clear
+```
+#### verify
+* view to verify
+    * localhost:1337
+    * localhost:1337/admin
+* look at chrome web tools to see files served
+* Check logs
+    * ```docker-compose -f docker-compose.prod.yml logs -f```
+
+_end _08_prod
+
